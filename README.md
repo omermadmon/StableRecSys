@@ -1,10 +1,6 @@
-# StableRecSys
+# Stable Recommendation Mechanisms
 
-Code and simulation results for:
-
-**Learning Dynamics of Strategic Content Creators and Stable Recommendation Mechanisms: An Axiomatic Approach**
-
-Authors: Omer Madmon and Moshe Tennenholtz
+Code and simulation results for the paper **Stable Recommendation Mechanisms**, by Omer Madmon and Moshe Tennenholtz.
 
 ## Repository Structure
 
