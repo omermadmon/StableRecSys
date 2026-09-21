@@ -15,7 +15,7 @@ except ModuleNotFoundError:  # pragma: no cover - exercised only without scipy.
 
 @dataclass
 class RegretMinimizingPlayer:
-    """LRL-OFTRL player adapted from the no-regret repository."""
+    """LRL-OFTRL player adaptation."""
 
     d: int
     eta: float
@@ -69,7 +69,7 @@ def solve_opt_prob(
 
 
 def project_lam_y(lam_y: np.ndarray) -> np.ndarray:
-    """Project to the original feasible shape: eps <= y_i <= lambda <= 1."""
+    """Enforce the lifted feasibility constraints: eps <= y_i <= lambda <= 1."""
     z = np.asarray(lam_y, dtype=float).copy()
     z = np.clip(z, 1e-5, 1.0)
     z[1:] = np.minimum(z[1:], z[0])
@@ -79,7 +79,7 @@ def project_lam_y(lam_y: np.ndarray) -> np.ndarray:
 def solve_opt_prob_slsqp(
     tmp: np.ndarray, eta: float, initial_guess: np.ndarray
 ) -> tuple[float, np.ndarray]:
-    """Original SLSQP solve used by the no-regret repository."""
+    """Solve the log-regularized OFTRL update using SLSQP."""
 
     def objective(lam_y: np.ndarray) -> float:
         return float(-(eta * np.dot(tmp, lam_y) + np.sum(np.log(lam_y))))
@@ -130,7 +130,7 @@ def no_regret_dynamics(
     steps: list[float] | np.ndarray,
     rng: np.random.Generator,
 ) -> NRDResult:
-    """No-regret dynamics using numerical gradients from the game."""
+    """No-regret dynamics using analytic gradients from the game."""
     players = [RegretMinimizingPlayer(d=game.k, eta=eta) for _ in game.N]
     directions = create_directions_set(game.k, rng)
     running_sum = np.zeros_like(game.x)

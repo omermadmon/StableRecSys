@@ -13,7 +13,7 @@ def create_directions_set(
     rng: np.random.Generator | None = None,
     max_directions: int = 200,
 ) -> np.ndarray:
-    """Create JAIR-style directions, sampled when 3^k is too large."""
+    """Create normalized grid directions, sampled when 3^k is too large."""
     total_nonzero = (3**k) - 1
     if total_nonzero <= max_directions:
         directions = itertools.product([-1, 0, 1], repeat=k)
@@ -88,7 +88,7 @@ def discrete_better_response_dynamics(
     eps: float,
     rng: np.random.Generator,
 ) -> BRDResult:
-    """JAIR-style discrete better-response dynamics."""
+    """Discrete better-response dynamics."""
     game.initialize()
     directions = create_directions_set(game.k, rng)
     updates = 0
